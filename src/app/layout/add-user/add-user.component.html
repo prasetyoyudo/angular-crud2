@@ -1,0 +1,191 @@
+<div class="p-6 w-6/12 mx-auto">
+  <div class="flex-col">
+    <div class="flex flex-row justify-between mb-3">
+      <h1 class="text-lg" *ngIf="isDisplayButton">Tambah User</h1>
+      <h1 class="text-lg" *ngIf="!isDisplayButton">Detail User</h1>
+    </div>
+    <form class="mt-5" [formGroup]="userForm">
+      <div class="input-group mb-3">
+        <label
+          [ngClass]="
+            userForm.controls['firstName'].touched &&
+            userForm.controls['firstName'].hasError('required')
+              ? 'label-input-error'
+              : 'main-color'
+          "
+          class="text-sm px-3"
+          name="firstName"
+          id="firstName"
+          >Nama Depan</label
+        >
+
+        <input
+          [ngClass]="
+            userForm.controls['firstName'].touched &&
+            userForm.controls['firstName'].hasError('required')
+              ? 'border-red-400 bg-red-100'
+              : 'bg-blue-input'
+          "
+          type="text"
+          id="firstName"
+          name="firstName"
+          formControlName="firstName"
+          required
+          class="w-full rounded-xl h-12 px-3"
+          placeholder="Masukkan nama depan Anda"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <label
+          [ngClass]="
+            userForm.controls['lastName'].touched &&
+            userForm.controls['lastName'].hasError('required')
+              ? 'label-input-error'
+              : 'main-color'
+          "
+          class="text-sm px-3"
+          name="lastName"
+          id="lastName"
+          >Nama Belakang</label
+        >
+
+        <input
+          [ngClass]="
+            userForm.controls['lastName'].touched &&
+            userForm.controls['lastName'].hasError('required')
+              ? 'border-red-400 bg-red-100'
+              : 'bg-blue-input'
+          "
+          type="text"
+          id="lastName"
+          name="lastName"
+          formControlName="lastName"
+          required
+          class="w-full rounded-xl h-12 px-3"
+          placeholder="Masukkan nama belakang Anda"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <label
+          [ngClass]="
+            (userForm.controls['email'].touched &&
+              userForm.controls['email'].hasError('required')) ||
+            (userForm.controls['email'].touched &&
+              userForm.controls['email'].hasError('pattern'))
+              ? 'label-input-error'
+              : 'main-color'
+          "
+          class="text-sm px-3"
+          name="email"
+          id="email"
+          >Email</label
+        >
+
+        <input
+          [ngClass]="
+            (userForm.controls['email'].touched &&
+              userForm.controls['email'].hasError('required')) ||
+            (userForm.controls['email'].touched &&
+              userForm.controls['email'].hasError('pattern'))
+              ? 'border-red-400 bg-red-100'
+              : 'bg-blue-input'
+          "
+          type="text"
+          id="email"
+          name="email"
+          (input)="inputEmail($event)"
+          formControlName="email"
+          required
+          class="w-full rounded-xl h-12 px-3"
+          placeholder="Masukkan email Anda"
+          autocomplete="off"
+        />
+        <div
+          *ngIf="
+            userForm.controls['email'].touched &&
+            userForm.controls['email'].hasError('pattern')
+          "
+        >
+          <p class="label-input-error text-sm">Format email salah</p>
+        </div>
+      </div>
+
+      <div class="relative" (click)="onOpenDatePicker()" id="dateTime">
+        <label class="text-sm main-color px-3" name="dob" id="dob"
+          >Tanggal Lahir</label
+        >
+        <input
+          type="text"
+          id="dob"
+          name="dob"
+          readonly
+          formControlName="dob"
+          required
+          class="w-full rounded-xl h-12 bg-blue-input px-3 cursor-pointer"
+          autocomplete="off"
+          placeholder="Masukkan tanggal lahir Anda"
+        />
+        <div class="float-right -my-9 pr-2">
+          <img src="../../../../../assets/calendar.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="input-group mt-3">
+        <label
+          [ngClass]="
+            userForm.controls['basicSalary'].touched &&
+            userForm.controls['basicSalary'].hasError('required')
+              ? 'label-input-error'
+              : 'main-color'
+          "
+          class="text-sm px-3"
+          name="basicSalary"
+          id="basicSalary"
+          >Basic Salary</label
+        >
+
+        <input
+          [ngClass]="
+            userForm.controls['basicSalary'].touched &&
+            userForm.controls['basicSalary'].hasError('required')
+              ? 'border-red-400 bg-red-100'
+              : 'bg-blue-input'
+          "
+          type="number"
+          id="basicSalary"
+          name="basicSalary"
+          formControlName="basicSalary"
+          required
+          class="w-full rounded-xl h-12 px-3"
+          placeholder="Masukkan basic salary"
+          autocomplete="off"
+        />
+      </div>
+    </form>
+
+    <button
+      *ngIf="isDisplayButton"
+      [style.background]="
+        userForm.valid
+          ? 'linear-gradient(95.21deg, #3692A7 6.86%, #6BB9CD 93.65%)'
+          : '#AEAFB2'
+      "
+      [disabled]="!userForm.valid"
+      class="shadow-lg text-center mt-4 w-full text-lg rounded-3xl text-white py-2 font-semibold"
+      (click)="onAddUser(userForm.value)"
+    >
+      TAMBAH
+    </button>
+    <button
+    *ngIf="isDisplayButton"
+      class="shadow-lg text-center mt-4 yellow-btn w-full text-lg rounded-3xl text-white py-2 font-semibold"
+      (click)="onCancel()"
+    >
+      BATAL
+    </button>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<section [class.open]="display" class="fixed z-40 inset-0 overflow-y-auto top-0 bottom-0 w-full" (click)="onClose()">
+  <div class="flex items-end justify-center min-h-screen text-center sm:p-0 bg-gray-900 bg-opacity-40">
+    <div [ngClass]="display ? 'animate__fadeInUp' : 'animate__fadeOutDown'" (click)="$event.stopPropagation()"
+      class="animate__animated rounded-t-3xl inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:align-middle w-480 h-3/5"
+      role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+      <div class="bg-white px-4 pt-2 pb-4 sm:p-6 sm:pb-4">
+        <div class="bg-white border-slide flex flex-col h-half text-center z-50 outline-none focus:outline-none">
+          <hr class="line mx-28" />
+          <div (click)="onClose()" class="right-5 absolute top-4">
+            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.5 23C6.69412 23 2 18.3059 2 12.5C2 6.69412 6.69412 2 12.5 2C18.3059 2 23 6.69412 23 12.5C23 18.3059 18.3059 23 12.5 23ZM12.5 3.23529C7.37353 3.23529 3.23529 7.37353 3.23529 12.5C3.23529 17.6265 7.37353 21.7647 12.5 21.7647C17.6265 21.7647 21.7647 17.6265 21.7647 12.5C21.7647 7.37353 17.6265 3.23529 12.5 3.23529Z"
+                fill="#AEAFB2" />
+              <path
+                d="M16.6584 7.44739C16.9055 7.20033 17.306 7.20039 17.553 7.44754C17.7999 7.69457 17.7998 8.09495 17.5529 8.3419L8.34131 17.5529C8.09438 17.7998 7.69405 17.7998 7.44713 17.5529C7.20019 17.306 7.20018 16.9057 7.44711 16.6587L16.6584 7.44739Z"
+                fill="#AEAFB2" />
+              <path
+                d="M7.44698 7.44753C7.69396 7.20039 8.09454 7.20032 8.34161 7.44737L17.5529 16.6581C17.7998 16.905 17.7999 17.3054 17.553 17.5525C17.306 17.7996 16.9055 17.7997 16.6584 17.5526L7.44713 8.3419C7.20017 8.09495 7.2001 7.69457 7.44698 7.44753Z"
+                fill="#AEAFB2" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <p class="text-lg font font-bold mt-3">Pilih Tanggal</p>
+      </div>
+
+      <div class="flex items-center justify-between px-4 pt-6">
+        <button type="button"
+          class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+          (click)="year = year - 1" (click)="getNoOfDays()">
+          <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <mat-select class="text-lg font-bold text-gray-800" [(ngModel)]="year">
+          <mat-option *ngFor="let item of yearsList" (click)="getNoOfDays()" [value]="item">
+            {{ item }}
+          </mat-option>
+        </mat-select>
+
+        <button type="button"
+          class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+          [ngClass]="{ 'cursor-not-allowed opacity-25': year === finalYear }" [disabled]="year === finalYear"
+          (click)="year = year + 1" (click)="getNoOfDays()">
+          <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between px-4 pt-6">
+        <button type="button"
+          class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+          [ngClass]="{ 'cursor-not-allowed opacity-25': month === 0 }" [disabled]="month === 0 ? true : false"
+          (click)="month = month - 1" (click)="getNoOfDays()">
+          <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div>
+          <span class="text-lg font-bold text-gray-800">{{
+            monthData[month]
+            }}</span>
+        </div>
+        <button type="button"
+          class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+          [ngClass]="{ 'cursor-not-allowed opacity-25': month === 11 }" [disabled]="month === 11 ? true : false"
+          (click)="month = month + 1" (click)="getNoOfDays()">
+          <svg class="h-6 w-6 text-gray-500 inline-flex" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+      <div class="px-4 mt-3 date-wrapper">
+        <div class="flex flex-wrap mb-3 -mx-1">
+          <ng-container *ngFor="let day of DAYS; let index = index">
+            <div style="width: 14.26%" class="px-1">
+              <div class="text-gray-800 font-medium text-center text-xs">
+                {{ day }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="flex flex-wrap -mx-1">
+          <ng-container *ngFor="let blankday of blankdays">
+            <div style="width: 14.28%" class="text-center border-none p-1 border-transparent text-sm"></div>
+          </ng-container>
+          <ng-container *ngFor="
+              let date of no_of_days;
+              let dateIndex = index;
+              trackBy: trackByIdentity
+            ">
+            <div style="width: 14.28%" class="px-1 mb-1">
+              <div (click)="getDateValue(date)"
+                class="cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
+                [ngClass]="{
+                  'bg-blue-500 text-white': isToday(date) === true,
+                  'text-gray-700 hover:bg-blue-200': isToday(date) === false
+                }">
+                {{ date }}
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

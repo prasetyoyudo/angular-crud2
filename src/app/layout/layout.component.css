@@ -1,0 +1,12 @@
+.bg-blue-input {
+  background-color: #c6e4ec80;
+}
+
+.label-input-error {
+  font-weight: normal;
+  color: #fa5659;
+}
+
+.yellow-btn {
+  background: #fcb041;
+}
