@@ -27,6 +27,12 @@ export class AddUsersComponent implements OnInit, OnDestroy {
     userId   : string = ''
     userData : any
     isDisplayButton : boolean = true
+    genderStatus = [{
+        status : 'male'
+    },
+    {
+        status : 'female'
+    }]
 
     constructor(
         private _Layout: LayoutService,
@@ -38,6 +44,7 @@ export class AddUsersComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         try {
+            console.log(this.genderStatus)
             await this.initForm()
             this.getBirthDate()
             this.activatedRoute.queryParams.subscribe(async params => {
@@ -45,11 +52,13 @@ export class AddUsersComponent implements OnInit, OnDestroy {
                 this.userId = params['userId']
                 this.userData = await this.getUserDetail(this.userId)
                 console.log(this.userData)
+                let gender : string
+
                 this.userForm.controls['firstName'].setValue(this.userData.firstName);
                 this.userForm.controls['lastName'].setValue(this.userData.lastName);
-                this.userForm.controls['dob'].setValue('21/03/96');
+                this.userForm.controls['title'].setValue(this.userData.gender);
                 this.userForm.controls['email'].setValue('test@gmail.com');
-                this.userForm.controls['basicSalary'].setValue('200000');
+                this.userForm.controls['address'].setValue('Abbey Road');
                 this.isDisplayButton = false
             });
 
@@ -75,10 +84,10 @@ export class AddUsersComponent implements OnInit, OnDestroy {
                 Validators.required,
                 Validators.pattern(customPattern)
             ])],
-            dob: ['', Validators.compose([
+            title: ['', Validators.compose([
                 Validators.required,
             ])],
-            basicSalary: ['', Validators.compose([
+            address: ['', Validators.compose([
                 Validators.required,
             ])],
         })

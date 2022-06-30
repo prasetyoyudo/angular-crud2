@@ -114,54 +114,51 @@
         </div>
       </div>
 
-      <div class="relative" (click)="onOpenDatePicker()" id="dateTime">
-        <label class="text-sm main-color px-3" name="dob" id="dob"
-          >Tanggal Lahir</label
-        >
-        <input
-          type="text"
-          id="dob"
-          name="dob"
-          readonly
-          formControlName="dob"
-          required
-          class="w-full rounded-xl h-12 bg-blue-input px-3 cursor-pointer"
-          autocomplete="off"
-          placeholder="Masukkan tanggal lahir Anda"
-        />
-        <div class="float-right -my-9 pr-2">
-          <img src="../../../../../assets/calendar.svg" alt="" />
-        </div>
+      <div class="input-group mb-3">
+        <label for="">Gender</label>
+        <select formControlName="title" class="bg-blue-input py-2 rounded-lg w-full" >
+          <option
+            *ngFor="let opt of genderStatus"
+            [value]="opt.status"
+          >
+            {{ opt.status }}
+          </option>
+        </select>
       </div>
 
-      <div class="input-group mt-3">
+      <div class="input-group mb-3">
         <label
           [ngClass]="
-            userForm.controls['basicSalary'].touched &&
-            userForm.controls['basicSalary'].hasError('required')
+            (userForm.controls['address'].touched &&
+              userForm.controls['address'].hasError('required')) ||
+            (userForm.controls['address'].touched &&
+              userForm.controls['address'].hasError('pattern'))
               ? 'label-input-error'
               : 'main-color'
           "
           class="text-sm px-3"
-          name="basicSalary"
-          id="basicSalary"
-          >Basic Salary</label
+          name="address"
+          id="address"
+          >Alamat</label
         >
 
         <input
           [ngClass]="
-            userForm.controls['basicSalary'].touched &&
-            userForm.controls['basicSalary'].hasError('required')
+            (userForm.controls['address'].touched &&
+              userForm.controls['address'].hasError('required')) ||
+            (userForm.controls['address'].touched &&
+              userForm.controls['address'].hasError('pattern'))
               ? 'border-red-400 bg-red-100'
               : 'bg-blue-input'
           "
-          type="number"
-          id="basicSalary"
-          name="basicSalary"
-          formControlName="basicSalary"
+          type="text"
+          id="address"
+          name="address"
+          (input)="inputEmail($event)"
+          formControlName="address"
           required
           class="w-full rounded-xl h-12 px-3"
-          placeholder="Masukkan basic salary"
+          placeholder="Masukkan alamat Anda"
           autocomplete="off"
         />
       </div>
@@ -181,7 +178,7 @@
       TAMBAH
     </button>
     <button
-    *ngIf="isDisplayButton"
+      *ngIf="isDisplayButton"
       class="shadow-lg text-center mt-4 yellow-btn w-full text-lg rounded-3xl text-white py-2 font-semibold"
       (click)="onCancel()"
     >

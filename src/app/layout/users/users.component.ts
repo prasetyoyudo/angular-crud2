@@ -62,9 +62,16 @@ export class UsersComponent implements OnInit, OnDestroy {
                     this.page = data.page
 
                     data['data'].map((dataMapping : any) => {
+                        console.log(dataMapping.gender)
                         dataMapping.basicSalary = '200000'
                         dataMapping.email = 'test@gmail.com'
-                        dataMapping.dob = '21/03/96'
+                        dataMapping.password = 'showPass'
+                        dataMapping.address = 'Abbey Road'
+                        if(dataMapping.title == 'mr') {
+                            return dataMapping.title = 'male'
+                        } else {
+                            return dataMapping.title = 'female'
+                        }
                         return
                     })
                     resolve(this.userDataModel = data['data'])
